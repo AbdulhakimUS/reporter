@@ -1,37 +1,144 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-    <title>Reporter</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Склад — Учёт товаров</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h2>📦 Inventory Report</h2>
-    
-        <div class="section">
-          <input type="text" id="itemName" placeholder="Enter item name" />
-          <input type="number" id="itemQty" placeholder="Enter quantity" />
-          <button onclick="addItem()">➕ Add Item</button>
+  <div class="app">
+    <!-- Боковое меню -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">SD</div>
+        <div>
+          <h1>Склад Менеджер</h1>
+          <div class="subtitle">Учёт и продажи</div>
         </div>
-    
-        <div class="section">
-          <input type="text" id="sellItem" placeholder="Enter item name to sell" />
-          <input type="number" id="sellQty" placeholder="Enter quantity sold" />
-          <button onclick="sellItem()">💸 Sell Item</button>
-        </div>
-    
-        <table id="inventoryTable">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Quantity</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
       </div>
+
+      <nav class="menu">
+        <button class="active" data-view="dashboard">🏠 <span>Главная</span></button>
+        <button data-view="products">📦 <span>Товары</span></button>
+        <button data-view="orders">🧾 <span>Продажи</span></button>
+        <button data-view="customers">👥 <span>Клиенты</span></button>
+        <button data-view="reports">📈 <span>Отчёты</span></button>
+        <button data-view="settings">⚙️ <span>Настройки</span></button>
+      </nav>
+
+      <div class="user">
+        <div class="muted">Вы вошли как:</div>
+        <div class="user-name">Администратор</div>
+      </div>
+    </aside>
+
+    <!-- Главный блок -->
+    <main class="main">
+      <header class="top">
+        <div class="search">
+          <input id="search" placeholder="Поиск по товарам, заказам, клиентам..." />
+        </div>
+        <div class="actions">
+          <button class="ghost" onclick="exportData()">Экспорт</button>
+          <button class="btn" onclick="openAddProduct()">Добавить товар</button>
+        </div>
+      </header>
+
+      <!-- Панель: Главная -->
+      <section id="view-dashboard">
+        <div class="grid-cards">
+          <div class="card">
+            <h3>Всего товаров</h3>
+            <div class="value" id="card-total-products">0</div>
+            <div class="small">Количество позиций</div>
+          </div>
+          <div class="card">
+            <h3>Общий остаток</h3>
+            <div class="value" id="card-total-stock">0</div>
+            <div class="small">Все единицы на складе</div>
+          </div>
+          <div class="card">
+            <h3>Малый остаток</h3>
+            <div class="value" id="card-low-stock">0</div>
+            <div class="small">Товары ниже порога</div>
+          </div>
+        </div>
+
+        <div class="panels">
+          <div class="panel">
+            <h4>Последние продажи</h4>
+            <div id="recent-orders"></div>
+          </div>
+
+          <div class="panel">
+            <h4>Быстрые действия</h4>
+            <div class="quick">
+              <button class="btn" onclick="openAddProduct()">Добавить товар</button>
+              <button class="ghost" onclick="openSellProduct()">Продать товар</button>
+              <button class="ghost" onclick="clearAllData()">Очистить всё</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Панель: Товары -->
+      <section id="view-products" style="display:none">
+        <div class="panel">
+          <h4>Товары</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Название</th><th>Артикул</th><th>Кол-во</th><th>Цена</th><th>Действия</th></tr></thead>
+              <tbody id="products-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Продажи -->
+      <section id="view-orders" style="display:none">
+        <div class="panel">
+          <h4>Продажи</h4>
+          <div id="orders-list"></div>
+        </div>
+      </section>
+
+      <!-- Клиенты -->
+      <section id="view-customers" style="display:none">
+        <div class="panel">
+          <h4>Клиенты</h4>
+          <div id="customers-list"></div>
+        </div>
+      </section>
+
+      <!-- Отчёты -->
+      <section id="view-reports" style="display:none">
+        <div class="panel">
+          <h4>Отчёты по продажам</h4>
+          <canvas id="chart-sales" width="600" height="220"></canvas>
+        </div>
+      </section>
+
+      <!-- Настройки -->
+      <section id="view-settings" style="display:none">
+        <div class="panel">
+          <h4>Настройки</h4>
+          <div class="field">
+            <label>Порог малого остатка</label>
+            <input id="setting-threshold" type="number" min="1"/>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">© 2025 — Система учёта склада (SD Style)</div>
+    </main>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="modal">
+    <div id="modal-content"></div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
