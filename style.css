@@ -1,4 +1,4 @@
-/* === Общие стили === */
+/* === RESET & GLOBAL === */
 * {
     margin: 0;
     padding: 0;
@@ -9,23 +9,20 @@
   html, body {
     width: 100%;
     height: 100%;
-    overflow: hidden;
     background: #f5f6fa;
     color: #333;
   }
   
-  /* === Контейнер приложения === */
+  /* === APP CONTAINER === */
   .app {
     display: flex;
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    gap: 0;              /* убираем промежуток между блоками */
-    margin: 0;           /* доп. защита от отступов */
-    padding: 0;
+    gap: 0;
   }
   
-  /* === Сайдбар === */
+  /* === SIDEBAR === */
   .sidebar {
     width: 260px;
     background: #1f2937;
@@ -34,11 +31,19 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100vh;
-    position: relative;
+    position: fixed;
     left: 0;
     top: 0;
+    transition: left 0.3s ease;
+    z-index: 100;
   }
   
+  /* Sidebar hidden for mobile */
+  .sidebar.hidden {
+    left: -260px;
+  }
+  
+  /* === BRAND SECTION === */
   .brand {
     display: flex;
     align-items: center;
@@ -60,6 +65,7 @@
   
   .brand h1 {
     font-size: 18px;
+    font-weight: 600;
   }
   
   .brand .subtitle {
@@ -67,6 +73,7 @@
     color: #9ca3af;
   }
   
+  /* === MENU BUTTONS === */
   .menu {
     display: flex;
     flex-direction: column;
@@ -91,11 +98,12 @@
   .menu button.active {
     background: #3b82f6;
   }
-
+  
   .menu button.active {
     font-weight: bold;
   }
   
+  /* === USER INFO === */
   .user {
     padding: 15px 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -111,18 +119,22 @@
     margin-top: 3px;
   }
   
-  /* === Основная часть === */
+  /* === MAIN AREA === */
   .main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
+    margin-left: 260px;
     background: #f5f6fa;
-    margin: 0;     /* ✅ убирает пустоту */
-    padding: 0;
+    transition: margin-left 0.3s ease;
   }
   
+  /* Main full width when sidebar hidden */
+  .main.full {
+    margin-left: 0;
+  }
+  
+  /* === TOP BAR === */
   .top {
     display: flex;
     justify-content: space-between;
@@ -130,8 +142,29 @@
     padding: 15px 25px;
     background: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 90;
   }
   
+  /* === HAMBURGER ICON === */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    cursor: pointer;
+  }
+  
+  .hamburger span {
+    background: #1f2937;
+    height: 3px;
+    width: 100%;
+    border-radius: 3px;
+  }
+  
+  /* === SEARCH BAR & BUTTONS === */
   .top input {
     padding: 10px 15px;
     border-radius: 8px;
@@ -172,6 +205,7 @@
     color: #fff;
   }
   
+  /* === DASHBOARD CARDS === */
   .grid-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -203,7 +237,7 @@
     color: #777;
   }
   
-  /* === Панели и таблицы === */
+  /* === PANELS & TABLES === */
   .panel {
     background: #fff;
     border-radius: 12px;
@@ -235,6 +269,7 @@
     background: #f3f4f6;
   }
   
+  /* === FOOTER === */
   .footer {
     text-align: center;
     padding: 15px;
@@ -242,7 +277,7 @@
     font-size: 13px;
   }
   
-  /* === Модальное окно === */
+  /* === MODAL === */
   #modal {
     display: none;
     position: fixed;
@@ -250,7 +285,7 @@
     background: rgba(0, 0, 0, 0.4);
     justify-content: center;
     align-items: center;
-    z-index: 10;
+    z-index: 999;
   }
   
   #modal-content {
@@ -276,82 +311,34 @@
     margin-top: 10px;
   }
   
-  /* === 📱🌐 Полностью адаптивный дизайн от 300px до 2000px === */
-
-/* ----- Маленькие экраны: до 600px ----- */
-@media (max-width: 600px) {
-    .app {
-      flex-direction: column;
+  /* === RESPONSIVE === */
+  
+  /* Small screens: up to 768px */
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
     }
   
     .sidebar {
-      width: 100%;
-      height: auto;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px;
-    }
-  
-    .brand {
-      flex-direction: row;
-      justify-content: center;
-      gap: 8px;
-      padding: 0;
-    }
-  
-    .brand .logo {
-      width: 32px;
-      height: 32px;
-      font-size: 14px;
-    }
-  
-    .brand h1 {
-      font-size: 14px;
-    }
-  
-    .menu {
-      flex-direction: row;
-      overflow-x: auto;
-      width: 100%;
-      justify-content: space-around;
-    }
-  
-    .menu button {
-      font-size: 13px;
-      padding: 8px 10px;
-      flex: 1;
-      white-space: nowrap;
-    }
-  
-    .user {
-      display: none;
+      position: fixed;
+      height: 100vh;
     }
   
     .main {
-      flex: 1;
-      width: 100%;
-      overflow-y: auto;
-    }
-  
-    .top {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 10px;
-      padding: 10px;
+      margin-left: 0;
     }
   
     .top input {
       width: 100%;
     }
   
-    .actions {
-      justify-content: space-between;
+    .top {
+      flex-wrap: wrap;
+      gap: 10px;
     }
   
     .grid-cards {
       grid-template-columns: 1fr;
-      gap: 15px;
       padding: 10px;
     }
   
@@ -360,106 +347,23 @@
       padding: 10px;
     }
   
-    table th, table td {
-      padding: 6px;
-      font-size: 13px;
-    }
-  
     .btn, .ghost {
+      font-size: 13px;
       padding: 8px 12px;
-      font-size: 13px;
-    }
-  }
-  
-  /* ----- Средние экраны: 600px – 1024px ----- */
-  @media (min-width: 600px) and (max-width: 1024px) {
-    .sidebar {
-      width: 200px;
     }
   
     .brand h1 {
       font-size: 16px;
     }
   
-    .menu button {
-      font-size: 14px;
-      padding: 12px 16px;
-    }
-  
-    .top input {
-      width: 240px;
-    }
-  
-    .grid-cards {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-  
-    .panel {
-      margin: 15px;
-      padding: 15px;
-    }
-  
-    table th, table td {
+    .brand .logo {
+      width: 32px;
+      height: 32px;
       font-size: 14px;
     }
-  }
   
-  /* ----- Большие экраны: 1024px – 1600px ----- */
-  @media (min-width: 1024px) and (max-width: 1600px) {
-    .sidebar {
-      width: 240px;
-    }
-  
-    .brand h1 {
-      font-size: 17px;
-    }
-  
-    .menu button {
-      font-size: 15px;
-    }
-  
-    .grid-cards {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-  
-    .panel {
-      margin: 20px;
-      padding: 20px;
-    }
-  }
-  
-  /* ----- Очень большие экраны: 1600px – 2000px ----- */
-  @media (min-width: 1600px) {
-    .sidebar {
-      width: 280px;
-    }
-  
-    .brand h1 {
-      font-size: 20px;
-    }
-  
-    .menu button {
-      font-size: 18px;
-      padding: 18px 22px;
-    }
-  
-    .grid-cards {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-  
-    .panel {
-      margin: 30px;
-      padding: 25px;
-    }
-  
-    table th, table td {
-      font-size: 16px;
-      padding: 12px 10px;
-    }
-  
-    .btn, .ghost {
-      font-size: 16px;
-      padding: 10px 18px;
+    .user {
+      display: none;
     }
   }
   
