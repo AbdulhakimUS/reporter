@@ -276,3 +276,190 @@
     margin-top: 10px;
   }
   
+  /* === 📱🌐 Полностью адаптивный дизайн от 300px до 2000px === */
+
+/* ----- Маленькие экраны: до 600px ----- */
+@media (max-width: 600px) {
+    .app {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+      height: auto;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+    }
+  
+    .brand {
+      flex-direction: row;
+      justify-content: center;
+      gap: 8px;
+      padding: 0;
+    }
+  
+    .brand .logo {
+      width: 32px;
+      height: 32px;
+      font-size: 14px;
+    }
+  
+    .brand h1 {
+      font-size: 14px;
+    }
+  
+    .menu {
+      flex-direction: row;
+      overflow-x: auto;
+      width: 100%;
+      justify-content: space-around;
+    }
+  
+    .menu button {
+      font-size: 13px;
+      padding: 8px 10px;
+      flex: 1;
+      white-space: nowrap;
+    }
+  
+    .user {
+      display: none;
+    }
+  
+    .main {
+      flex: 1;
+      width: 100%;
+      overflow-y: auto;
+    }
+  
+    .top {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      padding: 10px;
+    }
+  
+    .top input {
+      width: 100%;
+    }
+  
+    .actions {
+      justify-content: space-between;
+    }
+  
+    .grid-cards {
+      grid-template-columns: 1fr;
+      gap: 15px;
+      padding: 10px;
+    }
+  
+    .panel {
+      margin: 10px;
+      padding: 10px;
+    }
+  
+    table th, table td {
+      padding: 6px;
+      font-size: 13px;
+    }
+  
+    .btn, .ghost {
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+  }
+  
+  /* ----- Средние экраны: 600px – 1024px ----- */
+  @media (min-width: 600px) and (max-width: 1024px) {
+    .sidebar {
+      width: 200px;
+    }
+  
+    .brand h1 {
+      font-size: 16px;
+    }
+  
+    .menu button {
+      font-size: 14px;
+      padding: 12px 16px;
+    }
+  
+    .top input {
+      width: 240px;
+    }
+  
+    .grid-cards {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+  
+    .panel {
+      margin: 15px;
+      padding: 15px;
+    }
+  
+    table th, table td {
+      font-size: 14px;
+    }
+  }
+  
+  /* ----- Большие экраны: 1024px – 1600px ----- */
+  @media (min-width: 1024px) and (max-width: 1600px) {
+    .sidebar {
+      width: 240px;
+    }
+  
+    .brand h1 {
+      font-size: 17px;
+    }
+  
+    .menu button {
+      font-size: 15px;
+    }
+  
+    .grid-cards {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+  
+    .panel {
+      margin: 20px;
+      padding: 20px;
+    }
+  }
+  
+  /* ----- Очень большие экраны: 1600px – 2000px ----- */
+  @media (min-width: 1600px) {
+    .sidebar {
+      width: 280px;
+    }
+  
+    .brand h1 {
+      font-size: 20px;
+    }
+  
+    .menu button {
+      font-size: 18px;
+      padding: 18px 22px;
+    }
+  
+    .grid-cards {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+  
+    .panel {
+      margin: 30px;
+      padding: 25px;
+    }
+  
+    table th, table td {
+      font-size: 16px;
+      padding: 12px 10px;
+    }
+  
+    .btn, .ghost {
+      font-size: 16px;
+      padding: 10px 18px;
+    }
+  }
+  
