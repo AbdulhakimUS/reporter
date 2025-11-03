@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.py": "python",
+        "main.C": "cpp"
+    }
+}
